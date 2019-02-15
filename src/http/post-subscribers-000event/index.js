@@ -1,15 +1,15 @@
 const db = require('@architect/data')
 
 exports.handler = async function http (req) {
-  const api_key = req.headers['x-api-key'] || false
-  const {event = false} = req.params
-  const {data = {subscriberURL: ''}} = req.body
-  const {subscriberURL = ''} = data
+  const API_KEY = req.headers['x-api-key'] || false
+  const { event = false } = req.params
+  const { data = { subscriberURL: '' } } = req.body
+  const { subscriberURL = '' } = data
 
-  const encodedURL = (new Buffer(subscriberURL)).toString('base64')
+  const encodedURL = (Buffer.from(subscriberURL)).toString('base64')
 
   const subscriber = await db.subscribers.put({
-    serviceEvent: `${api_key}|${event}`,
+    serviceEvent: `${API_KEY}|${event}`,
     subscriber: encodedURL,
     subscriberURL,
     updated: Date.now()

@@ -1,4 +1,4 @@
-exports.handler = async function http(req) {
+exports.handler = async function http (req) {
   console.log(req)
   return {
     type: 'application/json; charset=utf8',

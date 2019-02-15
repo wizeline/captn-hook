@@ -1,12 +1,11 @@
 const arc = require('@architect/functions')
 
 exports.handler = async function http (req) {
-  const api_key = req.headers['x-api-key'] || 'xxxxX.Xxxxx'
-  const {event = false} = req.params
-  const {data = {}} = req.body
+  const API_KEY = req.headers['x-api-key'] || 'xxxxX.Xxxxx'
+  const { event = false } = req.params
+  const { data = {} } = req.body
 
-
-  if(!event) {
+  if (!event) {
     return {
       status: 400,
       error: `Bad Request`
@@ -15,7 +14,7 @@ exports.handler = async function http (req) {
 
   try {
     const payload = {
-      client: api_key,
+      client: API_KEY,
       event,
       data
     }
@@ -23,7 +22,7 @@ exports.handler = async function http (req) {
     // push event to the queue
     await arc.queues.publish({
       name: 'events',
-      payload,
+      payload
     })
 
     return {

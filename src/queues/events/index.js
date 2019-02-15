@@ -4,7 +4,7 @@ const db = require('@architect/data')
 async function handler (record) {
   console.log(`record: `, record)
 
-  const api_key = record.client || 'xxxxX.Xxxxx'
+  const API_KEY = record.client || 'xxxxX.Xxxxx'
   const event = record.event
 
   let response = {
@@ -15,7 +15,7 @@ async function handler (record) {
     const results = await db.subscribers.query({
       KeyConditionExpression: `serviceEvent = :event`,
       ExpressionAttributeValues: {
-        ':event': `${api_key}|${event}`
+        ':event': `${API_KEY}|${event}`
       }
     })
 
