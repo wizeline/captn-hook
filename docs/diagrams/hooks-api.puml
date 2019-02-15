@@ -1,0 +1,28 @@
+@startuml
+!include ./settings/theme.puml
+
+participant "<img ./icons/External.png>\nService A" as ServiceA #1eaa2f
+participant "<img ./icons/AWS-Lambda_Lambda-Function.png>\nHooks API" as CaptnAPI #black
+collections "<img ./icons/Amazon-DynamoDB_Table.png> \n<color:#527fff>Services Registry</color>" as ServicesTable #white
+participant "<img ./icons/Amazon-Simple-Queue-Service-SQS_Message.png>\n<color:black>Triggered Hooks</color>" as HooksQ #white
+
+
+ServiceA -> CaptnAPI: ""HookEvent Request""
+
+group Hook Request
+  activate CaptnAPI
+  CaptnAPI --> ServicesTable: Look-up API Key
+  activate ServicesTable
+  CaptnAPI <-- ServicesTable: Ser vice data and quota.
+  deactivate ServicesTable
+  CaptnAPI -> CaptnAPI: Authenticate API Key
+  CaptnAPI -> CaptnAPI: Check Rate limit.
+  CaptnAPI -->o HooksQ: Queue Hook Event
+
+  CaptnAPI -> ServiceA: ""HookEvent Response"" \n<color:red>""AuthError""</color> \n<color:red>""RatelimitExceededError""</color>
+  deactivate CaptnAPI
+end
+
+destroy CaptnAPI
+
+@enduml

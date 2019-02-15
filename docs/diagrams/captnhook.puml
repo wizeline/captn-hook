@@ -1,0 +1,56 @@
+@startuml
+!include ./settings/theme.puml
+
+participant "<img ./icons/External.png>\nService A" as ServiceA #1eaa2f
+participant "<img ./icons/AWS-Lambda_Lambda-Function.png>\nHooks API" as CaptnAPI #black
+collections "<img ./icons/Amazon-DynamoDB_Table.png> \n<color:#527fff>Services Registry</color>" as ServicesTable #white
+collections "<img ./icons/Amazon-DynamoDB_Table.png> \n<color:#527fff>Event Subscribers</color>" as SubscribersTable #white
+participant "<img ./icons/Amazon-Simple-Queue-Service-SQS_Message.png>\n<color:black>Triggered Hooks</color>" as HooksQ #white
+
+group Hook Request
+  ServiceA -> CaptnAPI: HookEvent Request
+  activate CaptnAPI
+  CaptnAPI -> CaptnAPI: Authenticate API Key
+  CaptnAPI -> ServicesTable: Look-up API Key
+  CaptnAPI <- ServicesTable: Service data and quota.
+  CaptnAPI -> CaptnAPI: Check Rate limit.
+  CaptnAPI --> HooksQ: Queue Hook Event
+  CaptnAPI -> ServiceA: HookEvent Response \nAuthError \nRatelimitExceededError
+  deactivate CaptnAPI
+  ...
+end
+...
+
+participant "<img ./icons/AWS-Lambda_Lambda-Function.png>\nCaptn's Ship" as Ship #black
+participant "<img ./icons/Amazon-Simple-Queue-Service-SQS_Message.png>\n<color:black>Event Hooks</color>" as HookEventsQ #white
+participant "<img ./icons/AWS-Lambda_Lambda-Function.png>\nCaptn' Cannon" as Cannon #black
+
+group Prepare Hooks' Cannons
+  HooksQ --> Ship: HookEvent
+  activate Ship
+  Ship -> Ship: Unwrap Event
+  Ship --> SubscribersTable: Get Subscribers for Event
+  Ship <-- SubscribersTable: Subscribers List
+  Ship --> HookEventsQ: Queue a Triggered Event per Subscriber
+  deactivate Ship
+
+end
+...
+
+collections "<img ./icons/Amazon-DynamoDB_Table.png>\n<color:black>Webhook Status</color>" as WebhooksTable #white
+participant "<img ./icons/External.png>\nService B" as ServiceB #C3402A
+
+group Trigger Cannons
+  HookEventsQ --> Cannon: HookTriggered Event
+  activate Cannon
+  Cannon --> ServiceB: Send Webhook
+  activate Cannon
+  Cannon <-- ServiceB: Webhook Status
+  deactivate Cannon
+  Cannon --> WebhooksTable: Update Webhook Status
+  deactivate Cannon
+  destroy Cannon
+end
+...
+
+@enduml

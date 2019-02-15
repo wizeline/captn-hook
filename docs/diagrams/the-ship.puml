@@ -1,0 +1,28 @@
+@startuml
+!include ./settings/theme.puml
+
+participant "<img ./icons/Amazon-Simple-Queue-Service-SQS_Message.png>\n<color:black>Triggered Hooks</color>" as HooksQ #white
+participant "<img ./icons/AWS-Lambda_Lambda-Function.png>\nCaptn's Ship" as Ship #black
+collections "<img ./icons/Amazon-DynamoDB_Table.png> \n<color:#527fff>Event Subscribers</color>" as SubscribersTable #white
+participant "<img ./icons/Amazon-Simple-Queue-Service-SQS_Message.png>\n<color:black>Event Hooks</color>" as HookEventsQ #white
+
+
+activate HooksQ
+HooksQ o--> Ship: HookEvent
+deactivate HooksQ
+
+group Prepare Hooks' Cannons
+
+  activate Ship
+  Ship -> Ship: Unwrap "":Event""
+  Ship --> SubscribersTable: Get ""≪Subscribers≫"" of "":Event""
+  activate SubscribersTable
+  Ship <-- SubscribersTable: Subscribers[]
+  deactivate SubscribersTable
+  Ship -->o HookEventsQ: Queue a ""TriggeredEvent"" per Subscriber
+  deactivate Ship
+end
+
+destroy Ship
+
+@end

@@ -1,0 +1,50 @@
+@startuml
+
+skinparam defaultFontName "Open Sans"
+
+skinparam NoteBackgroundColor WhiteSmoke
+skinparam NoteFontName OpenSans
+skinparam NoteFontColor Black
+skinparam NoteFontSize 12
+
+skinparam sequence {
+  MessageAlign left
+
+	ArrowColor DarkBlue
+	ArrowThickness 1.1
+	LifeLineBorderThickness 2
+	LifeLineBorderColor #DarkGray
+	LifeLineBackgroundColor #Snow
+
+	DelayFontName OpenSans
+	DelayFontSize 13
+
+	ParticipantBorderColor Black
+	ParticipantBackgroundColor DarkBlue
+	ParticipantFontColor White
+	ParticipantFontName Hasklig-Bold
+	ParticipantFontSize 16
+
+	'ActorBackgroundColor aqua
+	'ActorFontColor DeepSkyBlue
+	'ActorFontSize 17
+	'ActorFontName Aapex
+
+	GroupBackgroundColor WhiteSmoke
+	GroupBorderThickness 1
+	GroupBorderColor Silver
+	GroupFontColor Black
+	GroupFontName OpenSans
+	GroupFontSize 13
+
+	DividerBorderThickness 0
+	DividerBorderColor transparent
+	DividerBackgroundColor transparent
+	DividerFontColor Black
+	DividerFontName OpenSans
+	DividerFontSize 13
+	DividerShadowing false
+}
+
+
+@enduml

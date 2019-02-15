@@ -1,0 +1,26 @@
+@startuml
+!include ./settings/theme.puml
+participant "<img ./icons/Amazon-Simple-Queue-Service-SQS_Message.png>\n<color:black>Event Hooks</color>" as HookEventsQ #white
+participant "<img ./icons/AWS-Lambda_Lambda-Function.png>\nCaptn' Cannon" as Cannon #black
+collections "<img ./icons/Amazon-DynamoDB_Table.png>\n<color:black>Webhook Status</color>" as WebhooksTable #white
+participant "<img ./icons/External.png>\nService B" as ServiceB #C3402A
+
+HookEventsQ o--> Cannon: HookTriggered Event
+
+group Trigger Cannons
+
+  activate Cannon
+  Cannon -> ServiceB: Send Webhook
+  activate Cannon
+  activate ServiceB
+  Cannon <- ServiceB: Response
+  deactivate Cannon
+  deactivate ServiceB
+
+  Cannon --> WebhooksTable: Update Webhook Status
+  deactivate Cannon
+end
+
+destroy Cannon
+
+@enduml
