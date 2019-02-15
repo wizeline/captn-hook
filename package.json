@@ -1,0 +1,16 @@
+{
+  "name": "captnhook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "local": "ARC_LOCAL=true npx sandbox",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Eduardo Romero",
+  "license": "ISC",
+  "dependencies": {
+    "@architect/architect": "^5.5.0"
+  }
+}
