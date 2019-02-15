@@ -20,14 +20,14 @@ The Hook API allows basic operations on Captn' Hook:
 - Add a Subscriber to an Event.
 - Trigger an Event of a specific service.
 
-![Hooks API Sequence Diagram]('diagrams/hooks-api.png')
+![Hooks API Sequence Diagram](diagrams/hooks-api.png)
 
 
 ### λ Ship 
 
 The Ship module receives events from the Hooks Queue, and loads the events into the cannons for webhook delivery.
 
-![Ship Sequence Diagram]('diagrams/the-ship.png')
+![Ship Sequence Diagram](diagrams/the-ship.png)
 
 
 ### λ Cannons
@@ -35,7 +35,7 @@ The Ship module receives events from the Hooks Queue, and loads the events into 
 The Cannons are the workers that send the webhooks to the subscribed services. Cannons will retry three times when 
 they miss their target. After that they will mark the webhook as a failure.
 
-![Cannons Sequence Diagram]('diagrams/cannons.png')
+![Cannons Sequence Diagram](diagrams/cannons.png)
 
 ### λ Mr. Smee
 
