@@ -38,7 +38,7 @@ npm run local
 ```
 
 
-## Architecture
+## Architecture Overview
 
 ![Captn' Hook](./docs/diagrams/Captn%27%20Hook%20-%20v1.png)
 
