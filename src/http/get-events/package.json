@@ -1,7 +1,7 @@
 {
   "name": "captnhook-get-events",
   "dependencies": {
-    "@architect/data": "^2.0.13",
-    "@architect/functions": "^2.0.4"
+    "@architect/data": "^2.0.14",
+    "@architect/functions": "^2.0.7"
   }
 }

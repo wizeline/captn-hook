@@ -12,7 +12,7 @@
   "author": "Eduardo Romero",
   "license": "ISC",
   "dependencies": {
-    "@architect/architect": "^5.5.0"
+    "@architect/architect": "^5.5.2"
   },
   "devDependencies": {
     "snazzy": "^8.0.0",
